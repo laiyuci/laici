@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>賴慈 — 自由接案網頁設計師</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;500;700&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --stamp:    #B0392E;
+      --rust:     #A4623A;
+      --gold:     #B8924A;
+      --rust-dark:#7E4626;
+      --paper:    #F4EFE6;
+      --paper-2:  #ECE5D2;
+      --paper-3:  #E4DCC4;
+      --ink:      #2B2A26;
+      --ink-soft: #5C544A;
+      --ink-mute: #8A7F70;
+      --rule:     #C8BFA9;
+      --display:  "Playfair Display", "Cormorant Garamond", Georgia, serif;
+      --serif-tc: "Noto Serif TC", "Songti TC", "PingFang TC", serif;
+      --sans-tc:  "Noto Sans TC", "PingFang TC", system-ui, sans-serif;
+      --hand:     "Caveat", cursive;
+      --serif-en: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+      --gutter:   clamp(24px, 5vw, 80px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif-tc);
+      font-size: 16px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ── Typography ── */
+    .en-display {
+      font-family: var(--display);
+      letter-spacing: 0.04em;
+    }
+    .hand { font-family: var(--hand); }
+    .label {
+      font-family: var(--sans-tc);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    /* ────────────────────────────────────────
+       HEADER / NAV
+    ──────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--rule);
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+    header .inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--serif-tc);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    nav { display: flex; gap: 32px; }
+    nav a {
+      font-family: var(--sans-tc);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--ink-mute);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--rust); }
+    .nav-cta {
+      font-family: var(--sans-tc);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      border: 1px solid var(--ink);
+      padding: 6px 18px;
+      color: var(--ink) !important;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--ink); color: var(--paper) !important; }
+
+    /* ────────────────────────────────────────
+       HERO
+    ──────────────────────────────────────── */
+    .hero {
+      padding: 72px 0 60px;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow .stamp {
+      display: inline-block;
+      border: 1.5px solid var(--stamp);
+      color: var(--stamp);
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(40px, 6vw, 84px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--rust);
+    }
+    .hero-subtitle {
+      font-family: var(--serif-tc);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-soft);
+      letter-spacing: 0.06em;
+      line-height: 1.9;
+      max-width: 480px;
+    }
+    .hero-meta {
+      text-align: right;
+    }
+    .hero-meta .issue {
+      font-family: var(--sans-tc);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--ink-mute);
+      margin-bottom: 8px;
+    }
+    .hero-meta .est {
+      font-family: var(--hand);
+      font-size: 22px;
+      color: var(--rust);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .hero-index {
+      margin-top: 40px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .hero-index .idx-item {
+      font-family: var(--serif-en);
+      font-size: 13px;
+      color: var(--ink-mute);
+      letter-spacing: 0.05em;
+    }
+    .hero-index .idx-sep { color: var(--rule); }
+
+    /* ────────────────────────────────────────
+       INTRO BAND
+    ──────────────────────────────────────── */
+    .intro-band {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .intro-band .page-ref {
+      font-family: var(--serif-en);
+      font-size: 13px;
+      color: var(--ink-mute);
+      padding-top: 6px;
+    }
+    .intro-body p {
+      font-size: 16px;
+      line-height: 2;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+    }
+    .intro-body p:last-child { margin-bottom: 0; }
+    .intro-body strong { color: var(--ink); font-weight: 500; }
+
+    /* ────────────────────────────────────────
+       SECTION HEADER
+    ──────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 40px 0 32px;
+    }
+    .section-header .sec-num {
+      font-family: var(--serif-en);
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.1em;
+    }
+    .section-header h2 {
+      font-family: var(--display);
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .section-header h2 em {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    /* ────────────────────────────────────────
+       SERVICES
+    ──────────────────────────────────────── */
+    .services {
+      border-top: 1px solid var(--rule);
+      padding-bottom: 64px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .service-card {
+      background: var(--paper);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+    .service-card:hover { background: var(--paper-2); }
+    .service-card .svc-label {
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .service-card h3 {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .service-card h3 em { font-style: italic; color: var(--rust); }
+    .service-card .svc-zh {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+    .service-card p {
+      font-size: 13px;
+      color: var(--ink-mute);
+      line-height: 1.8;
+    }
+    .service-card .svc-tags {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .service-card .svc-tags span {
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--rule);
+      padding: 2px 8px;
+      border-radius: 2px;
+      color: var(--ink-mute);
+    }
+
+    /* ────────────────────────────────────────
+       PRICING
+    ──────────────────────────────────────── */
+    .pricing {
+      border-top: 1px solid var(--rule);
+      padding-bottom: 64px;
+      background: var(--paper-2);
+      margin: 0 calc(-1 * var(--gutter));
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+    .pricing-note {
+      font-size: 13px;
+      color: var(--ink-mute);
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .price-card {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 36px 32px;
+      position: relative;
+    }
+    .price-card.featured {
+      border-color: var(--gold);
+      background: #fffcf5;
+    }
+    .price-card .badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--gold);
+      color: var(--paper);
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+    .price-card .plan-en {
+      font-family: var(--serif-en);
+      font-size: 13px;
+      color: var(--ink-mute);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .price-card h3 {
+      font-family: var(--serif-tc);
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .price-card .price {
+      font-family: var(--display);
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--rust);
+      margin-bottom: 4px;
+    }
+    .price-card .price-unit {
+      font-family: var(--sans-tc);
+      font-size: 12px;
+      color: var(--ink-mute);
+      margin-bottom: 20px;
+    }
+    .price-card .duration {
+      font-family: var(--sans-tc);
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .price-card ul {
+      list-style: none;
+    }
+    .price-card ul li {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      padding: 4px 0;
+      display: flex;
+      gap: 8px;
+    }
+    .price-card ul li::before {
+      content: "—";
+      color: var(--rule);
+      flex-shrink: 0;
+    }
+
+    /* ────────────────────────────────────────
+       PORTFOLIO
+    ──────────────────────────────────────── */
+    .portfolio {
+      border-top: 1px solid var(--rule);
+      padding-bottom: 64px;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .portfolio-card {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .portfolio-card .card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--paper-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-img-inner {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--ink-mute);
+      letter-spacing: 0.05em;
+    }
+    .card-img-inner em { font-style: italic; color: var(--rust); }
+    .portfolio-card .card-body {
+      padding: 24px;
+      background: var(--paper);
+    }
+    .portfolio-card .card-year {
+      font-family: var(--sans-tc);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--ink-mute);
+      margin-bottom: 8px;
+    }
+    .portfolio-card h3 {
+      font-family: var(--serif-tc);
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .portfolio-card .card-en {
+      font-family: var(--serif-en);
+      font-size: 14px;
+      color: var(--rust);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .portfolio-card p {
+      font-size: 13px;
+      color: var(--ink-mute);
+      line-height: 1.8;
+    }
+    .portfolio-card .card-tags {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .portfolio-card .card-tags span {
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      background: var(--paper-2);
+      padding: 3px 10px;
+      border-radius: 2px;
+      color: var(--ink-soft);
+    }
+
+    /* ────────────────────────────────────────
+       PROCESS
+    ──────────────────────────────────────── */
+    .process {
+      border-top: 1px solid var(--rule);
+      padding-bottom: 64px;
+    }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .process-step {
+      background: var(--paper);
+      padding: 32px 28px;
+    }
+    .process-step .step-num {
+      font-family: var(--serif-en);
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .process-step h3 {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .process-step h3 em { font-style: italic; color: var(--rust); }
+    .process-step .step-zh {
+      font-size: 13px;
+      color: var(--ink-mute);
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+    .process-step p {
+      font-size: 13px;
+      color: var(--ink-mute);
+      line-height: 1.8;
+    }
+
+    /* ────────────────────────────────────────
+       ABOUT
+    ──────────────────────────────────────── */
+    .about {
+      border-top: 1px solid var(--rule);
+      padding: 64px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .about-text h2 {
+      font-family: var(--display);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+    .about-text h2 em { font-style: italic; color: var(--rust); }
+    .about-text p {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 2;
+      margin-bottom: 16px;
+    }
+    .about-contact {
+      padding: 40px;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+    }
+    .about-contact h3 {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 24px;
+      font-style: italic;
+      color: var(--rust);
+    }
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .contact-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .contact-item .ci-label {
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+    }
+    .contact-item .ci-val {
+      font-family: var(--serif-en);
+      font-size: 18px;
+      color: var(--ink);
+    }
+    .contact-item .ci-val a {
+      color: var(--rust);
+      text-decoration: none;
+    }
+    .contact-item .ci-val a:hover { text-decoration: underline; }
+
+    /* ────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer .footer-left {
+      font-family: var(--sans-tc);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--ink-mute);
+    }
+    footer .footer-right {
+      font-family: var(--serif-en);
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.08em;
+      font-style: italic;
+    }
+
+    /* ────────────────────────────────────────
+       LINE FLOATING WIDGET
+    ──────────────────────────────────────── */
+    .line-float {
+      position: fixed;
+      right: 24px;
+      bottom: 32px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .line-float-label {
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--ink-mute);
+      margin-bottom: 6px;
+      background: var(--paper);
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid var(--rule);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s, transform 0.25s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .line-float:hover .line-float-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .line-float-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: #06C755;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(6,199,85,0.35), 0 2px 8px rgba(0,0,0,0.12);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .line-float-btn:hover {
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 8px 28px rgba(6,199,85,0.45), 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .line-float-btn:active { transform: scale(0.96); }
+    .line-float-btn svg {
+      width: 30px;
+      height: 30px;
+      fill: #fff;
+    }
+    /* Pulse ring */
+    .line-float-btn::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(6,199,85,0.4);
+      animation: pulse-ring 2.4s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { opacity: 1; transform: scale(1); }
+      70%  { opacity: 0; transform: scale(1.35); }
+      100% { opacity: 0; transform: scale(1.35); }
+    }
+
+    /* ────────────────────────────────────────
+       CTA BUTTON
+    ──────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans-tc);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 12px 28px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--rust); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans-tc);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 11px 28px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+    /* ────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-meta { text-align: left; }
+      .intro-band {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .about {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      nav { display: none; }
+    }
+
+    /* ────────────────────────────────────────
+       DECORATIVE ELEMENTS
+    ──────────────────────────────────────── */
+    .ornament {
+      font-family: var(--hand);
+      font-size: 18px;
+      color: var(--rust);
+      opacity: 0.6;
+    }
+    .divider-text {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: var(--rule);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+    }
+    .divider-text::before, .divider-text::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid var(--rule);
+    }
+    .questions-box {
+      background: var(--paper-2);
+      border-left: 3px solid var(--rust);
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      border-radius: 0 2px 2px 0;
+    }
+    .questions-box p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 2;
+      margin-bottom: 4px;
+    }
+    .questions-box p::before {
+      content: "— ";
+      color: var(--rule);
+    }
+    .questions-box .q-label {
+      font-family: var(--sans-tc);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="page">
+      <div class="inner">
+        <a class="logo" href="#">賴 慈</a>
+        <nav>
+          <a href="#services">服務</a>
+          <a href="#pricing">方案</a>
+          <a href="#works">作品</a>
+          <a href="#process">流程</a>
+          <a href="#about">關於</a>
+          <a href="https://line.me/ti/p/XenrG-oKtP" class="nav-cta" target="_blank" rel="noopener">聊聊 →</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section>
+    <div class="page">
+      <div class="hero">
+        <div class="hero-left">
+          <div class="hero-eyebrow">
+            <span class="stamp">EST. 2020</span>
+            <span class="label">FREELANCE · TPE</span>
+          </div>
+          <h1 class="hero-title en-display">
+            The web designer's<br><em>pamphlet</em>
+          </h1>
+          <p class="hero-subtitle">
+            自由接案網頁設計師。從設計到上線一次完成 ──<br>
+            用一本書的態度，做一個網站。
+          </p>
+          <div class="hero-index">
+            <span class="idx-item">P.02 — 關於我</span>
+            <span class="idx-sep">·</span>
+            <span class="idx-item">P.04 — 方案</span>
+            <span class="idx-sep">·</span>
+            <span class="idx-item">P.06 — 作品</span>
+            <span class="idx-sep">·</span>
+            <span class="idx-item">P.08 — 流程</span>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="issue">Issue 06 · Spring · Taipei</div>
+          <span class="est hand">Lai ci.</span>
+          <div style="margin-top:16px;">
+            <a href="https://line.me/ti/p/XenrG-oKtP" class="btn-primary" target="_blank" rel="noopener">
+              查 看 報 價 →
+            </a>
+          </div>
+          <div style="margin-top:10px; font-family:var(--hand); font-size:14px; color:var(--ink-mute); text-align:center;">
+            or just say hi on LINE
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr class="rule">
+
+  <!-- ── INTRO ── -->
+  <section>
+    <div class="page">
+      <div class="intro-band">
+        <div class="page-ref">
+          <div class="label" style="margin-bottom:8px;">P.02 / 09</div>
+          <div class="ornament">An open letter to —<br>still wondering<br>的你</div>
+        </div>
+        <div class="intro-body">
+          <p>
+            叫<strong>賴慈</strong>，2020 年從一份 9 to 5 的設計工作辭職，開始自由接案至今。
+            做過的客戶包括小型品牌、診所、選物店、餐廳、個人創作者，每一個都讓我學到一點點什麼。
+          </p>
+          <p>
+            我相信網站不只是工具，而是品牌一次完整的自我介紹。
+            所以我堅持每個案子親手做，從第一通電話到上線開香檳，全部都是我。
+          </p>
+          <div style="margin-top:24px;">
+            <a href="#about" class="btn-outline">認識我 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section class="services" id="services">
+    <div class="page">
+      <div class="section-header">
+        <span class="sec-num">01</span>
+        <h2>Services &amp; <em>Scope</em></h2>
+      </div>
+
+      <div class="questions-box">
+        <div class="q-label">如果你有以下問題：</div>
+        <p>網站看起來不專業</p>
+        <p>手機版很難用</p>
+        <p>不知道怎麼從零開始做一個網站</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="svc-label">01 — Web Design</div>
+          <h3>RWD<br><em>Responsive Web</em></h3>
+          <div class="svc-zh">響應式網頁設計</div>
+          <p>從手機到桌機，每個尺寸都精雕細琢。</p>
+          <div class="svc-tags">
+            <span>手機優先排版</span>
+            <span>流體網格</span>
+            <span>字距重排</span>
+            <span>hi-DPI 適配</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="svc-label">02 — Commerce</div>
+          <h3>E-<em>Commerce</em></h3>
+          <div class="svc-zh">品牌電商</div>
+          <p>商品、金流、出貨，一條龍。</p>
+          <div class="svc-tags">
+            <span>購物車</span>
+            <span>金流串接</span>
+            <span>會員系統</span>
+            <span>後台訂單管理</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="svc-label">03 — Custom</div>
+          <h3><em>Custom</em><br>Build</h3>
+          <div class="svc-zh">客製化開發</div>
+          <p>前後端功能開發、SEO 基礎架構、協助上架與後續維護。</p>
+          <div class="svc-tags">
+            <span>工作室</span>
+            <span>診所</span>
+            <span>個人品牌</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="svc-label">04 — Maintain</div>
+          <h3>Care &amp;<br><em>Update</em></h3>
+          <div class="svc-zh">網站維護</div>
+          <p>上線之後，我還在。每月內容更新、效能優化、安全維護。</p>
+          <div class="svc-tags">
+            <span>月結方案</span>
+            <span>效能優化</span>
+            <span>SEO 追蹤</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ── -->
+  <section class="pricing" id="pricing">
+    <div class="section-header">
+      <span class="sec-num">02</span>
+      <h2><em>Pricing</em> / 方案</h2>
+    </div>
+    <p class="pricing-note">所有方案皆含 RWD、SEO 基礎與上線部署。價格只是起點，實際依需求調整，可以先聊聊。</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="plan-en">Brand Website</div>
+        <h3>形象官網</h3>
+        <div class="price">NT$ 30,000</div>
+        <div class="price-unit">元起</div>
+        <div class="duration">20–30 天</div>
+        <ul>
+          <li>RWD 響應式設計</li>
+          <li>SEO 基礎架構</li>
+          <li>上線部署協助</li>
+          <li>工作室・診所・個人品牌適用</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="badge">推薦方案</div>
+        <div class="plan-en">Full Custom</div>
+        <h3>客製開發</h3>
+        <div class="price">NT$ 60,000</div>
+        <div class="price-unit">元起</div>
+        <div class="duration">30–45 天</div>
+        <ul>
+          <li>全部「形象官網」內容</li>
+          <li>客製化前端互動・動畫</li>
+          <li>功能模組整合</li>
+          <li>上線後 30 天保固</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="plan-en">E-Commerce</div>
+        <h3>電商網站</h3>
+        <div class="price">NT$ 60,000</div>
+        <div class="price-unit">元起</div>
+        <div class="duration">45–60 天</div>
+        <ul>
+          <li>商品 / 分類 / 搜尋頁</li>
+          <li>金流串接</li>
+          <li>會員系統</li>
+          <li>後台訂單管理</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="plan-en">Monthly Care</div>
+        <h3>月結維護</h3>
+        <div class="price">NT$ 1,500</div>
+        <div class="price-unit">元 / 月起</div>
+        <div class="duration">月結，隨時可停</div>
+        <ul>
+          <li>每月內容／圖片更新 2 次</li>
+          <li>效能優化建議報告</li>
+          <li>已上線、想長期穩定的網站</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PORTFOLIO ── -->
+  <section class="portfolio" id="works">
+    <div class="page">
+      <div class="section-header">
+        <span class="sec-num">03</span>
+        <h2><em>Selected</em> Works</h2>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-card">
+          <div class="card-img">
+            <div class="card-img-inner"><em>汪</em>汪翻譯</div>
+          </div>
+          <div class="card-body">
+            <div class="card-year">2024</div>
+            <h3>汪汪翻譯</h3>
+            <div class="card-en">Wang Translate</div>
+            <p>整站手寫字，滑入 18 處 ♡。自由譯者個人品牌網站，溫柔但有個性。</p>
+            <div class="card-tags">
+              <span>品牌</span>
+              <span>RWD</span>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-card">
+          <div class="card-img" style="background:var(--paper-2);">
+            <div class="card-img-inner" style="color:var(--rust);">Oceanian<br><em>Green</em></div>
+          </div>
+          <div class="card-body">
+            <div class="card-year">2024</div>
+            <h3>Oceanian Green</h3>
+            <div class="card-en">oceaniangreen01.github.io</div>
+            <p>選物品牌形象網站，電商功能整合，打造完整購物體驗。</p>
+            <div class="card-tags">
+              <span>品牌</span>
+              <span>RWD</span>
+              <span>電商</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROCESS ── -->
+  <section class="process" id="process">
+    <div class="page">
+      <div class="section-header">
+        <span class="sec-num">04</span>
+        <h2><em>Process</em> / 流程</h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3><em>Brief</em></h3>
+          <div class="step-zh">聊聊</div>
+          <p>30 分鐘線上 / 面對面，了解你的品牌、預算、時程，看看頻率合不合。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3><em>Design</em></h3>
+          <div class="step-zh">設計稿</div>
+          <p>根據品牌調性提出視覺方向，確認排版、色彩、字型，在開始寫扣之前先對齊。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3><em>Build</em></h3>
+          <div class="step-zh">切版開發</div>
+          <p>RWD 切版、互動細節、後端串接。每週同步進度。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <h3><em>Launch</em></h3>
+          <div class="step-zh">上線</div>
+          <p>域名設定、主機部署、最後驗收。上線之後，我還在。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT & CONTACT ── -->
+  <section id="about">
+    <div class="page">
+      <div class="about">
+        <div class="about-text">
+          <h2>關於<br><em>賴慈</em></h2>
+          <p>
+            叫賴慈，2020 年從一份 9 to 5 的設計工作辭職，開始自由接案至今。
+            做過的客戶包括小型品牌、診所、選物店、餐廳、個人創作者，
+            每一個都讓我學到一點點什麼。
+          </p>
+          <p>
+            我相信網站不只是工具，而是品牌一次完整的自我介紹。
+            所以我堅持每個案子親手做，從第一通電話到上線開香檳，全部都是我。
+          </p>
+          <div style="margin-top:12px; font-family:var(--hand); font-size:20px; color:var(--rust);">
+            — Lai ci, Taipei
+          </div>
+        </div>
+        <div class="about-contact">
+          <h3>Contact</h3>
+          <div class="contact-item">
+            <span class="ci-label">LINE</span>
+            <span class="ci-val">
+              <a href="https://line.me/ti/p/XenrG-oKtP" target="_blank" rel="noopener">turtli</a>
+            </span>
+          </div>
+          <div class="contact-item">
+            <span class="ci-label">Based in</span>
+            <span class="ci-val">Taipei, Taiwan</span>
+          </div>
+          <div class="contact-item">
+            <span class="ci-label">Since</span>
+            <span class="ci-val">2020</span>
+          </div>
+          <div style="margin-top:28px;">
+            <a href="https://line.me/ti/p/XenrG-oKtP" class="btn-primary" target="_blank" rel="noopener" style="width:100%; justify-content:center;">
+              聯 絡 我 →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="page" style="display:contents;">
+      <div class="footer-left" style="padding: 0 var(--gutter);">
+        賴慈 — 自由接案網頁設計師 · FREELANCE WEB DESIGNER
+      </div>
+      <div class="footer-right" style="padding: 0 var(--gutter);">
+        Issue 06 · Spring · Taipei
+      </div>
+    </div>
+  </footer>
+
+  <!-- ────────────────────────────────────────
+       LINE FLOATING WIDGET
+  ──────────────────────────────────────── -->
+  <div class="line-float">
+    <div class="line-float-label">LINE 聯絡賴慈</div>
+    <a
+      class="line-float-btn"
+      href="https://line.me/ti/p/XenrG-oKtP"
+      target="_blank"
+      rel="noopener"
+      aria-label="透過 LINE 聯絡賴慈"
+      title="LINE 聯絡我"
+    >
+      <!-- LINE icon -->
+      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4C11.163 4 4 10.268 4 18c0 4.98 2.962 9.358 7.416 12.003-.327 1.217-1.184 4.413-1.356 5.097-.213.842.308.832.648.607.267-.178 4.243-2.887 5.96-4.057.755.106 1.53.163 2.332.163 8.837 0 16-6.268 16-14S28.837 4 20 4z"/>
+        <path fill="#06C755" d="M20 4C11.163 4 4 10.268 4 18c0 4.98 2.962 9.358 7.416 12.003-.327 1.217-1.184 4.413-1.356 5.097-.213.842.308.832.648.607.267-.178 4.243-2.887 5.96-4.057.755.106 1.53.163 2.332.163 8.837 0 16-6.268 16-14S28.837 4 20 4z"/>
+        <g fill="#fff">
+          <path d="M28.5 19.5h-5v-5a.5.5 0 00-1 0v5.5a.5.5 0 00.5.5h5.5a.5.5 0 000-1z"/>
+          <rect x="11.5" y="14" width="1" height="7" rx=".5"/>
+          <path d="M17.5 14a.5.5 0 00-.5.5v4.293l-3.146-4.647A.5.5 0 0013 14.5v6a.5.5 0 001 0v-4.293l3.146 4.647A.5.5 0 0018 21v-6.5a.5.5 0 00-.5-.5z"/>
+          <path d="M24 14h-3a.5.5 0 00-.5.5v6a.5.5 0 00.5.5h3a.5.5 0 000-1h-2.5v-2H24a.5.5 0 000-1h-2.5V15H24a.5.5 0 000-1z"/>
+        </g>
+      </svg>
+    </a>
+  </div>
+
+</body>
+</html>
