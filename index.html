@@ -25,11 +25,10 @@
       --sans-tc:  "Noto Sans TC", "PingFang TC", system-ui, sans-serif;
       --hand:     "Caveat", cursive;
       --serif-en: "Cormorant Garamond", "EB Garamond", Georgia, serif;
-      --gutter:   clamp(24px, 5vw, 80px);
+      --gutter:   clamp(20px, 5vw, 80px);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -39,6 +38,7 @@
       font-size: 16px;
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* ── Layout ── */
@@ -55,10 +55,7 @@
     }
 
     /* ── Typography ── */
-    .en-display {
-      font-family: var(--display);
-      letter-spacing: 0.04em;
-    }
+    .en-display { font-family: var(--display); letter-spacing: 0.04em; }
     .hand { font-family: var(--hand); }
     .label {
       font-family: var(--sans-tc);
@@ -76,13 +73,16 @@
       padding: 18px 0;
       position: sticky;
       top: 0;
-      background: var(--paper);
+      background: rgba(244, 239, 230, 0.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 100;
     }
     header .inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
     .logo {
       font-family: var(--serif-tc);
@@ -91,8 +91,13 @@
       letter-spacing: 0.15em;
       color: var(--ink);
       text-decoration: none;
+      flex-shrink: 0;
     }
-    nav { display: flex; gap: 32px; }
+    nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
     nav a {
       font-family: var(--sans-tc);
       font-size: 12px;
@@ -100,11 +105,11 @@
       color: var(--ink-mute);
       text-decoration: none;
       transition: color 0.2s;
+      white-space: nowrap;
     }
     nav a:hover { color: var(--rust); }
     .nav-cta {
-      font-family: var(--sans-tc);
-      font-size: 12px;
+      font-size: 12px !important;
       letter-spacing: 0.12em;
       border: 1px solid var(--ink);
       padding: 6px 18px;
@@ -113,6 +118,83 @@
       transition: background 0.2s, color 0.2s !important;
     }
     .nav-cta:hover { background: var(--ink); color: var(--paper) !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 201;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile nav overlay */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--paper);
+      z-index: 200;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 80px 40px 60px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-nav.visible {
+      display: flex;
+    }
+    .mobile-nav.open {
+      opacity: 1;
+    }
+    .mobile-nav a {
+      font-family: var(--display);
+      font-size: clamp(24px, 7vw, 40px);
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+      width: 100%;
+      text-align: center;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--rust); }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav-cta {
+      margin-top: 32px !important;
+      border: 1.5px solid var(--ink) !important;
+      padding: 12px 40px !important;
+      border-radius: 2px;
+      font-family: var(--sans-tc) !important;
+      font-size: 14px !important;
+      border-bottom: 1.5px solid var(--ink) !important;
+    }
+    .mobile-nav .hand-note {
+      font-family: var(--hand);
+      font-size: 18px;
+      color: var(--rust);
+      margin-top: 24px;
+      opacity: 0.7;
+    }
 
     /* ────────────────────────────────────────
        HERO
@@ -130,6 +212,7 @@
       align-items: center;
       gap: 16px;
       margin-bottom: 24px;
+      flex-wrap: wrap;
     }
     .hero-eyebrow .stamp {
       display: inline-block;
@@ -143,17 +226,14 @@
     }
     .hero-title {
       font-family: var(--display);
-      font-size: clamp(40px, 6vw, 84px);
+      font-size: clamp(36px, 6vw, 84px);
       font-weight: 400;
       line-height: 1.1;
       letter-spacing: -0.01em;
       color: var(--ink);
       margin-bottom: 12px;
     }
-    .hero-title em {
-      font-style: italic;
-      color: var(--rust);
-    }
+    .hero-title em { font-style: italic; color: var(--rust); }
     .hero-subtitle {
       font-family: var(--serif-tc);
       font-size: 15px;
@@ -163,9 +243,7 @@
       line-height: 1.9;
       max-width: 480px;
     }
-    .hero-meta {
-      text-align: right;
-    }
+    .hero-meta { text-align: right; }
     .hero-meta .issue {
       font-family: var(--sans-tc);
       font-size: 11px;
@@ -183,7 +261,7 @@
     .hero-index {
       margin-top: 40px;
       display: flex;
-      gap: 24px;
+      gap: 16px;
       flex-wrap: wrap;
       align-items: center;
     }
@@ -229,23 +307,22 @@
       align-items: baseline;
       gap: 20px;
       padding: 40px 0 32px;
+      flex-wrap: wrap;
     }
     .section-header .sec-num {
       font-family: var(--serif-en);
       font-size: 12px;
       color: var(--ink-mute);
       letter-spacing: 0.1em;
+      flex-shrink: 0;
     }
     .section-header h2 {
       font-family: var(--display);
-      font-size: clamp(22px, 3vw, 36px);
+      font-size: clamp(20px, 3vw, 36px);
       font-weight: 400;
       letter-spacing: 0.02em;
     }
-    .section-header h2 em {
-      font-style: italic;
-      color: var(--rust);
-    }
+    .section-header h2 em { font-style: italic; color: var(--rust); }
 
     /* ────────────────────────────────────────
        SERVICES
@@ -256,14 +333,14 @@
     }
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1px;
       background: var(--rule);
       border: 1px solid var(--rule);
     }
     .service-card {
       background: var(--paper);
-      padding: 36px 32px;
+      padding: 32px 28px;
       transition: background 0.2s;
     }
     .service-card:hover { background: var(--paper-2); }
@@ -277,7 +354,7 @@
     }
     .service-card h3 {
       font-family: var(--display);
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 400;
       line-height: 1.2;
       margin-bottom: 12px;
@@ -329,14 +406,14 @@
     }
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
     }
     .price-card {
       background: var(--paper);
       border: 1px solid var(--rule);
       border-radius: 2px;
-      padding: 36px 32px;
+      padding: 32px 28px;
       position: relative;
     }
     .price-card.featured {
@@ -370,7 +447,7 @@
     }
     .price-card .price {
       font-family: var(--display);
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 400;
       color: var(--rust);
       margin-bottom: 4px;
@@ -390,9 +467,7 @@
       padding-bottom: 24px;
       border-bottom: 1px solid var(--rule);
     }
-    .price-card ul {
-      list-style: none;
-    }
+    .price-card ul { list-style: none; }
     .price-card ul li {
       font-size: 13px;
       color: var(--ink-soft);
@@ -417,67 +492,199 @@
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
+      gap: 28px;
     }
+
+    /* Browser mockup card */
     .portfolio-card {
       border: 1px solid var(--rule);
-      border-radius: 2px;
+      border-radius: 4px;
       overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
     }
-    .portfolio-card .card-img {
-      width: 100%;
-      aspect-ratio: 16/9;
+    .portfolio-card:hover {
+      box-shadow: 0 12px 40px rgba(43,42,38,0.12);
+      transform: translateY(-3px);
+    }
+
+    /* Browser chrome bar */
+    .browser-chrome {
       background: var(--paper-3);
+      border-bottom: 1px solid var(--rule);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .browser-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--rule);
+    }
+    .browser-dots span:nth-child(1) { background: #ff6b6b; }
+    .browser-dots span:nth-child(2) { background: #ffd93d; }
+    .browser-dots span:nth-child(3) { background: #6bcb77; }
+    .browser-url {
+      flex: 1;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-family: var(--serif-en);
+      font-size: 10px;
+      color: var(--ink-mute);
+      letter-spacing: 0.03em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Preview area */
+    .card-preview {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--paper-3);
+      position: relative;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .card-preview-inner {
+      text-align: center;
+      padding: 20px;
+    }
+    /* Wang Kuo-Hsing site preview */
+    .preview-wkh {
+      background: linear-gradient(135deg, #0a1628 0%, #1a2d50 50%, #0f1e3a 100%);
+    }
+    .preview-wkh .preview-logo-text {
+      font-family: var(--serif-tc);
+      font-size: clamp(14px, 2.5vw, 22px);
+      color: #C9A74A;
+      letter-spacing: 0.3em;
+      line-height: 2;
+    }
+    .preview-wkh .preview-sub {
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      color: rgba(201,167,74,0.6);
+      letter-spacing: 0.2em;
+      margin-top: 8px;
+    }
+    .preview-wkh .preview-line {
+      width: 60px;
+      height: 1px;
+      background: #C9A74A;
+      margin: 12px auto;
+      opacity: 0.5;
+    }
+    /* Oceanian Green preview — ocean blue freediving */
+    .preview-og {
+      background: linear-gradient(180deg, #0a1f3d 0%, #0d3060 35%, #0a4a7a 70%, #0e6090 100%);
       position: relative;
       overflow: hidden;
     }
-    .card-img-inner {
-      font-family: var(--display);
-      font-size: 28px;
-      font-weight: 400;
-      color: var(--ink-mute);
-      letter-spacing: 0.05em;
+    .preview-og::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(180deg, transparent, rgba(10,30,80,0.6));
     }
-    .card-img-inner em { font-style: italic; color: var(--rust); }
-    .portfolio-card .card-body {
+    .preview-og .preview-brand {
+      font-family: var(--display);
+      font-size: clamp(16px, 3vw, 24px);
+      font-style: italic;
+      color: #a8d8f0;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+    .preview-og .preview-tag {
+      font-family: var(--sans-tc);
+      font-size: 9px;
+      color: rgba(168,216,240,0.5);
+      letter-spacing: 0.3em;
+      margin-top: 8px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+    .preview-og .leaf {
+      font-size: 28px;
+      opacity: 0.4;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-preview::after {
+      content: '↗ 查看網站';
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      font-family: var(--sans-tc);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .portfolio-card:hover .card-preview::after { opacity: 1; }
+
+    .card-body {
       padding: 24px;
       background: var(--paper);
+      flex: 1;
     }
-    .portfolio-card .card-year {
+    .card-year {
       font-family: var(--sans-tc);
       font-size: 11px;
       letter-spacing: 0.15em;
       color: var(--ink-mute);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .portfolio-card h3 {
+    .card-body h3 {
       font-family: var(--serif-tc);
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 500;
       margin-bottom: 4px;
     }
-    .portfolio-card .card-en {
+    .card-en {
       font-family: var(--serif-en);
-      font-size: 14px;
+      font-size: 13px;
       color: var(--rust);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-style: italic;
     }
-    .portfolio-card p {
+    .card-body p {
       font-size: 13px;
       color: var(--ink-mute);
       line-height: 1.8;
     }
-    .portfolio-card .card-tags {
-      margin-top: 16px;
+    .card-tags {
+      margin-top: 14px;
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
-    .portfolio-card .card-tags span {
+    .card-tags span {
       font-family: var(--sans-tc);
       font-size: 10px;
       letter-spacing: 0.1em;
@@ -496,18 +703,18 @@
     }
     .process-steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1px;
       background: var(--rule);
       border: 1px solid var(--rule);
     }
     .process-step {
       background: var(--paper);
-      padding: 32px 28px;
+      padding: 28px 24px;
     }
     .process-step .step-num {
       font-family: var(--serif-en);
-      font-size: 42px;
+      font-size: 40px;
       font-weight: 300;
       color: var(--rule);
       line-height: 1;
@@ -545,7 +752,7 @@
     }
     .about-text h2 {
       font-family: var(--display);
-      font-size: clamp(28px, 3.5vw, 44px);
+      font-size: clamp(26px, 3.5vw, 44px);
       font-weight: 400;
       line-height: 1.3;
       margin-bottom: 24px;
@@ -558,7 +765,7 @@
       margin-bottom: 16px;
     }
     .about-contact {
-      padding: 40px;
+      padding: 36px;
       background: var(--paper-2);
       border: 1px solid var(--rule);
       border-radius: 2px;
@@ -615,6 +822,7 @@
       font-size: 11px;
       letter-spacing: 0.15em;
       color: var(--ink-mute);
+      padding: 0 var(--gutter);
     }
     footer .footer-right {
       font-family: var(--serif-en);
@@ -622,10 +830,11 @@
       color: var(--ink-mute);
       letter-spacing: 0.08em;
       font-style: italic;
+      padding: 0 var(--gutter);
     }
 
     /* ────────────────────────────────────────
-       LINE FLOATING WIDGET
+       LINE FLOAT
     ──────────────────────────────────────── */
     .line-float {
       position: fixed;
@@ -675,12 +884,7 @@
       box-shadow: 0 8px 28px rgba(6,199,85,0.45), 0 4px 12px rgba(0,0,0,0.15);
     }
     .line-float-btn:active { transform: scale(0.96); }
-    .line-float-btn svg {
-      width: 30px;
-      height: 30px;
-      fill: #fff;
-    }
-    /* Pulse ring */
+    .line-float-btn svg { width: 30px; height: 30px; fill: #fff; }
     .line-float-btn::before {
       content: '';
       position: absolute;
@@ -695,9 +899,7 @@
       100% { opacity: 0; transform: scale(1.35); }
     }
 
-    /* ────────────────────────────────────────
-       CTA BUTTON
-    ──────────────────────────────────────── */
+    /* ── CTA BUTTONS ── */
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -729,52 +931,13 @@
     }
     .btn-outline:hover { background: var(--ink); color: var(--paper); }
 
-    /* ────────────────────────────────────────
-       RESPONSIVE
-    ──────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-      .hero-meta { text-align: left; }
-      .intro-band {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-      .about {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      nav { display: none; }
-    }
-
-    /* ────────────────────────────────────────
-       DECORATIVE ELEMENTS
-    ──────────────────────────────────────── */
-    .ornament {
-      font-family: var(--hand);
-      font-size: 18px;
-      color: var(--rust);
-      opacity: 0.6;
-    }
-    .divider-text {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      color: var(--rule);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-    }
-    .divider-text::before, .divider-text::after {
-      content: '';
-      flex: 1;
-      border-top: 1px solid var(--rule);
-    }
+    /* Decorative */
+    .ornament { font-family: var(--hand); font-size: 18px; color: var(--rust); opacity: 0.6; }
     .questions-box {
       background: var(--paper-2);
       border-left: 3px solid var(--rust);
-      padding: 28px 32px;
-      margin-bottom: 40px;
+      padding: 24px 28px;
+      margin-bottom: 36px;
       border-radius: 0 2px 2px 0;
     }
     .questions-box p {
@@ -783,10 +946,7 @@
       line-height: 2;
       margin-bottom: 4px;
     }
-    .questions-box p::before {
-      content: "— ";
-      color: var(--rule);
-    }
+    .questions-box p::before { content: "— "; color: var(--rule); }
     .questions-box .q-label {
       font-family: var(--sans-tc);
       font-size: 11px;
@@ -794,6 +954,97 @@
       color: var(--ink-mute);
       text-transform: uppercase;
       margin-bottom: 16px;
+    }
+
+    /* ────────────────────────────────────────
+       RESPONSIVE — TABLET
+    ──────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 56px 0 48px;
+      }
+      .hero-meta { text-align: left; }
+      .hero-meta .est { display: inline; margin-right: 12px; }
+
+      .intro-band { grid-template-columns: 1fr; gap: 12px; }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    /* ────────────────────────────────────────
+       RESPONSIVE — MOBILE
+    ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      :root { --gutter: 20px; }
+
+      /* Nav */
+      nav { display: none; }
+      .hamburger { display: flex; }
+
+      /* Hero */
+      .hero {
+        padding: 44px 0 40px;
+      }
+      .hero-title { font-size: clamp(32px, 9vw, 52px); }
+      .hero-index { gap: 10px; }
+      .hero-index .idx-item { font-size: 11px; }
+
+      /* Intro */
+      .intro-band {
+        padding: 36px 0;
+      }
+      .intro-band .page-ref { display: none; }
+
+      /* Services */
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Pricing */
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Portfolio */
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      /* Process */
+      .process-steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* About */
+      .about {
+        padding: 48px 0;
+        gap: 32px;
+      }
+      .about-contact { padding: 28px 24px; }
+
+      /* Footer */
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      /* Line float */
+      .line-float { right: 16px; bottom: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+      .hero-title { font-size: clamp(28px, 10vw, 44px); }
+      .section-header { padding: 32px 0 24px; }
     }
   </style>
 </head>
@@ -812,9 +1063,23 @@
           <a href="#about">關於</a>
           <a href="https://line.me/ti/p/XenrG-oKtP" class="nav-cta" target="_blank" rel="noopener">聊聊 →</a>
         </nav>
+        <button class="hamburger" id="hamburger" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="導覽選單">
+    <a href="#services" class="mobile-link">服務</a>
+    <a href="#pricing" class="mobile-link">方案</a>
+    <a href="#works" class="mobile-link">作品</a>
+    <a href="#process" class="mobile-link">流程</a>
+    <a href="#about" class="mobile-link">關於</a>
+    <a href="https://line.me/ti/p/XenrG-oKtP" class="mobile-link mobile-nav-cta" target="_blank" rel="noopener">聊聊 →</a>
+    <div class="hand-note">or just say hi on LINE ♡</div>
+  </div>
 
   <!-- ── HERO ── -->
   <section>
@@ -850,7 +1115,7 @@
               查 看 報 價 →
             </a>
           </div>
-          <div style="margin-top:10px; font-family:var(--hand); font-size:14px; color:var(--ink-mute); text-align:center;">
+          <div style="margin-top:10px; font-family:var(--hand); font-size:14px; color:var(--ink-mute);">
             or just say hi on LINE
           </div>
         </div>
@@ -891,14 +1156,12 @@
         <span class="sec-num">01</span>
         <h2>Services &amp; <em>Scope</em></h2>
       </div>
-
       <div class="questions-box">
         <div class="q-label">如果你有以下問題：</div>
         <p>網站看起來不專業</p>
         <p>手機版很難用</p>
         <p>不知道怎麼從零開始做一個網站</p>
       </div>
-
       <div class="services-grid">
         <div class="service-card">
           <div class="svc-label">01 — Web Design</div>
@@ -906,10 +1169,8 @@
           <div class="svc-zh">響應式網頁設計</div>
           <p>從手機到桌機，每個尺寸都精雕細琢。</p>
           <div class="svc-tags">
-            <span>手機優先排版</span>
-            <span>流體網格</span>
-            <span>字距重排</span>
-            <span>hi-DPI 適配</span>
+            <span>手機優先排版</span><span>流體網格</span>
+            <span>字距重排</span><span>hi-DPI 適配</span>
           </div>
         </div>
         <div class="service-card">
@@ -918,10 +1179,8 @@
           <div class="svc-zh">品牌電商</div>
           <p>商品、金流、出貨，一條龍。</p>
           <div class="svc-tags">
-            <span>購物車</span>
-            <span>金流串接</span>
-            <span>會員系統</span>
-            <span>後台訂單管理</span>
+            <span>購物車</span><span>金流串接</span>
+            <span>會員系統</span><span>後台訂單管理</span>
           </div>
         </div>
         <div class="service-card">
@@ -930,9 +1189,7 @@
           <div class="svc-zh">客製化開發</div>
           <p>前後端功能開發、SEO 基礎架構、協助上架與後續維護。</p>
           <div class="svc-tags">
-            <span>工作室</span>
-            <span>診所</span>
-            <span>個人品牌</span>
+            <span>工作室</span><span>診所</span><span>個人品牌</span>
           </div>
         </div>
         <div class="service-card">
@@ -941,9 +1198,7 @@
           <div class="svc-zh">網站維護</div>
           <p>上線之後，我還在。每月內容更新、效能優化、安全維護。</p>
           <div class="svc-tags">
-            <span>月結方案</span>
-            <span>效能優化</span>
-            <span>SEO 追蹤</span>
+            <span>月結方案</span><span>效能優化</span><span>SEO 追蹤</span>
           </div>
         </div>
       </div>
@@ -1021,37 +1276,61 @@
         <h2><em>Selected</em> Works</h2>
       </div>
       <div class="portfolio-grid">
-        <div class="portfolio-card">
-          <div class="card-img">
-            <div class="card-img-inner"><em>汪</em>汪翻譯</div>
+
+        <!-- 王國興地政士事務所 -->
+        <a class="portfolio-card" href="https://wangkuohsing.github.io/" target="_blank" rel="noopener">
+          <div class="browser-chrome">
+            <div class="browser-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="browser-url">wangkuohsing.github.io</div>
+          </div>
+          <div class="card-preview preview-wkh">
+            <div class="card-preview-inner">
+              <div class="preview-wkh">
+                <div class="preview-logo-text">王國興地政士事務所</div>
+                <div class="preview-line"></div>
+                <div class="preview-sub">WANG KUO-HSING LAND OFFICE · HSINCHU</div>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="card-year">2024</div>
-            <h3>汪汪翻譯</h3>
-            <div class="card-en">Wang Translate</div>
-            <p>整站手寫字，滑入 18 處 ♡。自由譯者個人品牌網站，溫柔但有個性。</p>
+            <h3>王國興地政士事務所</h3>
+            <div class="card-en">Wang Kuo-Hsing Land Office</div>
+            <p>深藍金色主題，地政士專業形象官網。獎項輪播、服務介紹、Google Map 整合，完整呈現三十年深厚資歷。</p>
             <div class="card-tags">
-              <span>品牌</span>
-              <span>RWD</span>
+              <span>形象官網</span><span>RWD</span><span>動畫</span>
             </div>
           </div>
-        </div>
-        <div class="portfolio-card">
-          <div class="card-img" style="background:var(--paper-2);">
-            <div class="card-img-inner" style="color:var(--rust);">Oceanian<br><em>Green</em></div>
+        </a>
+
+        <!-- Oceanian Green -->
+        <a class="portfolio-card" href="https://oceaniangreen01.github.io/" target="_blank" rel="noopener">
+          <div class="browser-chrome">
+            <div class="browser-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="browser-url">oceaniangreen01.github.io</div>
+          </div>
+          <div class="card-preview preview-og">
+            <div class="card-preview-inner">
+              <div class="leaf">🤿</div>
+              <div class="preview-brand">Oceanian<br><em>Green</em></div>
+              <div class="preview-tag">Freediving · Ocean Brand</div>
+            </div>
           </div>
           <div class="card-body">
             <div class="card-year">2024</div>
             <h3>Oceanian Green</h3>
             <div class="card-en">oceaniangreen01.github.io</div>
-            <p>選物品牌形象網站，電商功能整合，打造完整購物體驗。</p>
+            <p>自由潛水品牌形象網站，深海藍色視覺語言，電商功能整合，打造完整的海洋品牌體驗。</p>
             <div class="card-tags">
-              <span>品牌</span>
-              <span>RWD</span>
-              <span>電商</span>
+              <span>品牌</span><span>RWD</span><span>電商</span>
             </div>
           </div>
-        </div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -1139,32 +1418,19 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div class="page" style="display:contents;">
-      <div class="footer-left" style="padding: 0 var(--gutter);">
-        賴慈 — 自由接案網頁設計師 · FREELANCE WEB DESIGNER
-      </div>
-      <div class="footer-right" style="padding: 0 var(--gutter);">
-        Issue 06 · Spring · Taipei
-      </div>
+    <div class="footer-left">
+      賴慈 — 自由接案網頁設計師 · FREELANCE WEB DESIGNER
+    </div>
+    <div class="footer-right">
+      Issue 06 · Spring · Taipei
     </div>
   </footer>
 
-  <!-- ────────────────────────────────────────
-       LINE FLOATING WIDGET
-  ──────────────────────────────────────── -->
+  <!-- ── LINE FLOAT ── -->
   <div class="line-float">
     <div class="line-float-label">LINE 聯絡賴慈</div>
-    <a
-      class="line-float-btn"
-      href="https://line.me/ti/p/XenrG-oKtP"
-      target="_blank"
-      rel="noopener"
-      aria-label="透過 LINE 聯絡賴慈"
-      title="LINE 聯絡我"
-    >
-      <!-- LINE icon -->
+    <a class="line-float-btn" href="https://line.me/ti/p/XenrG-oKtP" target="_blank" rel="noopener" aria-label="透過 LINE 聯絡賴慈">
       <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 4C11.163 4 4 10.268 4 18c0 4.98 2.962 9.358 7.416 12.003-.327 1.217-1.184 4.413-1.356 5.097-.213.842.308.832.648.607.267-.178 4.243-2.887 5.96-4.057.755.106 1.53.163 2.332.163 8.837 0 16-6.268 16-14S28.837 4 20 4z"/>
         <path fill="#06C755" d="M20 4C11.163 4 4 10.268 4 18c0 4.98 2.962 9.358 7.416 12.003-.327 1.217-1.184 4.413-1.356 5.097-.213.842.308.832.648.607.267-.178 4.243-2.887 5.96-4.057.755.106 1.53.163 2.332.163 8.837 0 16-6.268 16-14S28.837 4 20 4z"/>
         <g fill="#fff">
           <path d="M28.5 19.5h-5v-5a.5.5 0 00-1 0v5.5a.5.5 0 00.5.5h5.5a.5.5 0 000-1z"/>
@@ -1175,6 +1441,43 @@
       </svg>
     </a>
   </div>
+
+  <script>
+    // ── Hamburger menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileNav.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => mobileNav.classList.add('open'));
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+      mobileNav.addEventListener('transitionend', () => {
+        mobileNav.classList.remove('visible');
+      }, { once: true });
+    }
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    // Close on nav link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => closeMenu());
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && hamburger.classList.contains('open')) closeMenu();
+    });
+  </script>
 
 </body>
 </html>
